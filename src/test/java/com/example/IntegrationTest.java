@@ -8,20 +8,24 @@ import com.example.visit.Visit;
 import com.example.visit.VisitRepo;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@Tag("unit")
-public class TheTest {
+@SpringBootTest
+@Tag("integration")
+class IntegrationTest {
 
-    private final InvoiceRepo invoiceRepo = new InvoiceRepo();
-    private final VisitRepo visitRepo = new VisitRepo();
-    private ApplicationEventPublisher applicationEventPublisher = null;
-    private final PaymentRegisterService paymentRegisterService = new PaymentRegisterService(invoiceRepo, applicationEventPublisher);
+    @Autowired
+    InvoiceRepo invoiceRepo;
+    @Autowired
+    VisitRepo visitRepo;
+    @Autowired
+    PaymentRegisterService paymentRegisterService;
 
     @Test
     void onlyFullyPaidVisitShouldBecomePaidWhenInvoicesPaid() {
